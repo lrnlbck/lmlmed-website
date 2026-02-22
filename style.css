@@ -151,7 +151,7 @@ h6 {
 }
 
 .split-left {
-    background: url('https://lml-med.de/wp-content/uploads/2025/08/NOTSAN-HELP_COVER_04.png') center/cover;
+    background: url('assets/NOTSAN-HELP_COVER_04.jpg') center/cover;
 }
 
 /* Pseudo-element to blur the background images */
@@ -172,7 +172,7 @@ h6 {
 }
 
 .split-right {
-    background: url('https://lml-med.de/wp-content/uploads/2025/08/Blaulicht-auf-Steinmauer.png') center/cover;
+    background: url('assets/Blaulicht-auf-Steinmauer.jpg') center/cover;
 }
 
 .split-content-wrapper {
