@@ -159,11 +159,15 @@ h6 {
 .split-right::before {
     content: '';
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     backdrop-filter: blur(25px);
-    /* Strong blur */
     -webkit-backdrop-filter: blur(25px);
     z-index: 0;
+    transform: translateZ(0);
+    /* Hardware acceleration to fix iOS Safari blur bug */
     /* Keep it behind the overlay and content */
 }
 
@@ -634,21 +638,47 @@ footer {
         flex-direction: column;
     }
 
+    .split {
+        min-height: 50vh;
+        /* Force height so background images show properly */
+    }
+
     .navbar {
         padding: 1rem;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .logo img {
+        height: 45px;
     }
 
     .nav-links {
-        display: none;
-        /* simple mobile version */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .nav-links a {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
     }
 
     .split.focused {
         height: 100vh;
+        min-height: 100vh;
+    }
+
+    .hero-content {
+        width: 95%;
+        max-width: none;
     }
 
     .detailed-content {
-        padding: 100px 5% 40px 5%;
+        padding: 140px 5% 40px 5%;
+        /* Extra top padding for taller mobile navbar */
     }
 
     .split-title {
@@ -671,8 +701,8 @@ footer {
 }
 
 .detailed-content.active .portrait-container {
-    opacity: 0.6;
-    /* Lightly transparent as requested */
+    opacity: 0.25;
+    /* Deutlich transparenter */
     transform: translateX(0);
 }
 
@@ -697,7 +727,10 @@ footer {
 @media (max-width: 1200px) {
     .portrait-container {
         width: 300px;
-        opacity: 0.4;
+    }
+
+    .detailed-content.active .portrait-container {
+        opacity: 0.15;
     }
 }
 
