@@ -115,4 +115,21 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.setProperty('--mouse-y', `${y}px`);
         });
     });
+
+    // Email Security / Obfuscation
+    const protectedEmails = document.querySelectorAll('.protected-email');
+    protectedEmails.forEach(el => {
+        const user = el.getAttribute('data-u');
+        const domain = el.getAttribute('data-d');
+        if (user && domain) {
+            const email = `${user}@${domain}`;
+            if (el.tagName.toLowerCase() === 'a') {
+                el.href = `mailto:${email}`;
+            }
+            el.textContent = email;
+            el.removeAttribute('data-u');
+            el.removeAttribute('data-d');
+        }
+    });
 });
+
