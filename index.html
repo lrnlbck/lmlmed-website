@@ -1,30 +1,123 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" prefix="og: https://ogp.me/ns#">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LML-MED | Notfallmedizin & Podcast</title>
-    <meta name="description"
-        content="Laurin Lobeck - Dozent für Notfallmedizin und Host des NOTSAN-HELP Podcasts für das Notfallsanitäter-Staatsexamen.">
-    <!-- Google Fonts -->
+
+    <!-- ═══ PRIMARY META ═══ -->
+    <title>LML-MED | Notfallmedizin, Podcast &amp; Dozent – Laurin Lobeck</title>
+    <meta name="description" content="Laurin Lobeck – Notfallsanitäter, Medizinstudent &amp; ERC ALS Instructor. Host des NOTSAN-HELP Podcasts für das Notfallsanitäter-Staatsexamen. Dozent für Notfallmedizin, Trauma-Management &amp; Feuerwehr-Fortbildungen.">
+    <meta name="keywords" content="NOTSAN-HELP, Notfallsanitäter Staatsexamen, Podcast Notfallmedizin, ERC ALS, Rettungsdienst Fortbildung, Notfallsanitäter Prüfungsvorbereitung, Dozent Notfallmedizin, ITLS, Feuerwehr Fortbildung, Laurin Lobeck">
+    <meta name="author" content="Laurin Lobeck">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="de">
+    <meta name="theme-color" content="#0557e3">
+    <link rel="canonical" href="https://lml-med.de/">
+
+    <!-- ═══ OPEN GRAPH (Facebook, WhatsApp, LinkedIn …) ═══ -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="LML-MED">
+    <meta property="og:url" content="https://lml-med.de/">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:title" content="LML-MED – Notfallmedizin Podcast &amp; Dozent | Laurin Lobeck">
+    <meta property="og:description" content="NOTSAN-HELP – der Podcast fürs Notfallsanitäter-Staatsexamen. Und Laurin Lobeck als Dozent für ERC ALS, Trauma-Management &amp; Feuerwehr-Fortbildungen.">
+    <meta property="og:image" content="https://lml-med.de/assets/og-cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="LML-MED – Notfallmedizin Podcast und Dozent">
+
+    <!-- ═══ TWITTER / X CARD ═══ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LML-MED – Notfallmedizin Podcast &amp; Dozent">
+    <meta name="twitter:description" content="NOTSAN-HELP Podcast fürs Notfallsanitäter-Staatsexamen + Dozent für Notfallmedizin, ERC ALS &amp; Feuerwehr.">
+    <meta name="twitter:image" content="https://lml-med.de/assets/og-cover.jpg">
+    <meta name="twitter:image:alt" content="LML-MED – Notfallmedizin Podcast und Dozent">
+
+    <!-- ═══ FAVICON ═══ -->
+    <link rel="icon" type="image/png" href="/assets/aeskulap_mic_.png">
+    <link rel="apple-touch-icon" href="/assets/aeskulap_mic_.png">
+
+    <!-- ═══ PERFORMANCE: DNS-PREFETCH ═══ -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
-    <!-- FontAwesome for Icons -->
+    <link rel="dns-prefetch" href="https://open.spotify.com">
+    <link rel="dns-prefetch" href="https://podcasts.apple.com">
+    <link rel="dns-prefetch" href="https://d3t3ozftmdmh3i.cloudfront.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <!-- ═══ FONTS ═══ -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- ═══ ICONS ═══ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ═══ STYLES ═══ -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- ═══ STRUCTURED DATA: JSON-LD ═══ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://lml-med.de/#laurin-lobeck",
+          "name": "Laurin Lobeck",
+          "alternateName": "Laurin Maxim Lobeck",
+          "url": "https://lml-med.de",
+          "image": "https://lml-med.de/portrait_transparent.png",
+          "jobTitle": ["Notfallsanitäter", "Medizinstudent", "ERC ALS Instructor", "Dozent für Notfallmedizin"],
+          "description": "Notfallsanitäter, Medizinstudent und ERC ALS Instructor. Dozent für Notfallmedizin, Trauma-Management (ITLS) und Feuerwehr-Fortbildungen.",
+          "email": "fortbildung@lml-med.de",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Wald",
+            "postalCode": "87616",
+            "addressCountry": "DE"
+          },
+          "knowsAbout": ["Notfallmedizin", "Rettungsdienst", "ERC Advanced Life Support", "ITLS Trauma Management", "Notfallsanitäter-Ausbildung", "Feuerwehr-Fortbildung"],
+          "sameAs": [
+            "https://open.spotify.com/show/2a0V5gKPb2GrG680q5iMPc",
+            "https://podcasts.apple.com/de/podcast/notsan-help/id1830853129"
+          ]
+        },
+        {
+          "@type": "PodcastSeries",
+          "@id": "https://lml-med.de/#notsan-help",
+          "name": "NOTSAN-HELP",
+          "description": "Der Podcast für das Notfallsanitäter-Staatsexamen – kompaktes notfallmedizinisches Wissen zu Anatomie, Physiologie, Pharmakologie und Krankheitsbildern.",
+          "url": "https://lml-med.de/",
+          "image": "https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_episode/40545166/40545166-1766417956555-499f98fe3c4eb.jpg",
+          "inLanguage": "de",
+          "author": { "@id": "https://lml-med.de/#laurin-lobeck" },
+          "publisher": { "@id": "https://lml-med.de/#laurin-lobeck" },
+          "webFeed": [
+            "https://open.spotify.com/show/2a0V5gKPb2GrG680q5iMPc",
+            "https://podcasts.apple.com/de/podcast/notsan-help/id1830853129"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://lml-med.de/#website",
+          "name": "LML-MED",
+          "url": "https://lml-med.de",
+          "inLanguage": "de",
+          "description": "Offizielle Website von Laurin Lobeck – Notfallmedizin-Podcast NOTSAN-HELP und Dozenten-Angebote.",
+          "publisher": { "@id": "https://lml-med.de/#laurin-lobeck" }
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
     <div class="mesh-background"></div>
     <nav class="navbar">
-        <a href="https://lml-med.de" class="logo"><img src="assets/aeskulap_mic_.png" alt="LML-MED Logo"></a>
+        <a href="https://lml-med.de" class="logo" aria-label="LML-MED – Zur Startseite"><img src="assets/aeskulap_mic_.png" alt="LML-MED Logo – Notfallmedizin und Podcast"></a>
         <div class="nav-links">
-            <a href="#" id="link-podcast">Podcast</a>
-            <a href="#" id="link-dozent">Dozent</a>
+            <a href="#" id="link-podcast" aria-label="Podcast NOTSAN-HELP öffnen">Podcast</a>
+            <a href="#" id="link-dozent" aria-label="Dozent-Bereich öffnen">Dozent</a>
             <a href="datenschutz.html">Datenschutz</a>
             <a href="impressum.html">Impressum</a>
         </div>

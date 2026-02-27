@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LML-MED | ERC ALS Unterlagen</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none';">
+    <meta name="referrer" content="no-referrer">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="docs.css">
+    <script>
+        if (sessionStorage.getItem('lmlmed_docs_auth') !== '1') {
+            window.location.replace('index.html');
+        }
+    </script>
+</head>
+
+<body>
+    <div class="mesh-background"></div>
+
+    <nav class="docs-navbar">
+        <a href="index.html" class="docs-logo">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Übersicht</span>
+        </a>
+        <h2 class="docs-nav-title"><i class="fa-solid fa-heart-pulse"></i> ERC ALS</h2>
+        <button id="logout-btn" class="btn-logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Abmelden
+        </button>
+    </nav>
+
+    <main class="docs-main">
+        <a href="index.html" class="btn-back-docs"><i class="fa-solid fa-arrow-left"></i> Zurück zur Übersicht</a>
+
+        <div class="course-header">
+            <div class="course-header-icon"
+                style="background: linear-gradient(135deg, #7a1a1a, #e05c5c); box-shadow: 0 6px 20px rgba(224,92,92,0.35);">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+            <div class="course-header-text">
+                <h1>ERC ALS</h1>
+                <p>European Resuscitation Council – Advanced Life Support Kursunterlagen.</p>
+            </div>
+        </div>
+
+        <div class="course-table-wrapper glass-panel" style="padding: 0;">
+            <table class="course-table">
+                <thead>
+                    <tr>
+                        <th style="width: 180px;"><i class="fa-solid fa-bookmark"
+                                style="margin-right:0.5rem; opacity:0.7;"></i>Thema / Einheit</th>
+                        <th><i class="fa-solid fa-file-powerpoint"
+                                style="margin-right:0.5rem; opacity:0.7;"></i>Unterlagen / Datei</th>
+                    </tr>
+                </thead>
+                <tbody id="erc-table-body"></tbody>
+            </table>
+        </div>
+
+        <p class="upload-note">
+            <i class="fa-solid fa-circle-info"></i>
+            Dateien in <strong>docs/files/erc-als/</strong> hochladen und Dateinamen in der Konfiguration im Quellcode
+            eintragen.
+        </p>
+    </main>
+
+    <script>
+        if (sessionStorage.getItem('lmlmed_docs_auth') !== '1') {
+            window.location.replace('index.html');
+        }
+
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            sessionStorage.removeItem('lmlmed_docs_auth');
+            window.location.replace('index.html');
+        });
+
+        // ── ERC ALS File Configuration ──
+        const ERC_FILES = [
+            { label: 'Einheit 1', file: '' },
+            { label: 'Einheit 2', file: '' },
+            { label: 'Einheit 3', file: '' },
+            { label: 'Einheit 4', file: '' },
+            { label: 'Einheit 5', file: '' },
+            { label: 'Einheit 6', file: '' },
+            { label: 'Einheit 7', file: '' },
+            { label: 'Einheit 8', file: '' },
+            { label: 'Einheit 9', file: '' },
+            { label: 'Einheit 10', file: '' },
+        ];
+
+        const tbody = document.getElementById('erc-table-body');
+        ERC_FILES.forEach(row => {
+            const tr = document.createElement('tr');
+            const tdLabel = document.createElement('td');
+            tdLabel.textContent = row.label;
+            tr.appendChild(tdLabel);
+
+            const tdFile = document.createElement('td');
+            if (row.file) {
+                const ext = row.file.split('.').pop().toLowerCase();
+                const iconMap = { pdf: 'fa-file-pdf', pptx: 'fa-file-powerpoint', ppt: 'fa-file-powerpoint', docx: 'fa-file-word', doc: 'fa-file-word' };
+                const icon = iconMap[ext] || 'fa-file';
+                tdFile.innerHTML = `<a href="files/erc-als/${row.file}" class="file-link" target="_blank" rel="noopener noreferrer"><i class="fa-solid ${icon}"></i> ${row.file}</a>`;
+            } else {
+                tdFile.innerHTML = '<span class="file-empty"><i class="fa-regular fa-clock"></i> Noch nicht hochgeladen</span>';
+            }
+            tr.appendChild(tdFile);
+            tbody.appendChild(tr);
+        });
+    </script>
+</body>
+
+</html>

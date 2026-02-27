@@ -1,2 +1,12 @@
 User-agent: *
-Disallow: /impressum.html
+Allow: /
+Disallow: /docs/
+
+# Block common vulnerability scanners
+User-agent: *
+Disallow: /.git/
+Disallow: /*.env
+Disallow: /*.log
+
+# Sitemap location
+Sitemap: https://lml-med.de/sitemap.xml

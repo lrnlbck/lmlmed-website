@@ -1,0 +1,7 @@
+# Prevent listing of files directory
+Options -Indexes
+
+# Block all requests to this directory except for direct file downloads
+<FilesMatch "\.(htaccess|htpasswd)$">
+    Require all denied
+</FilesMatch>

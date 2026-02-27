@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+    <!-- Hauptseite -->
+    <url>
+        <loc>https://lml-med.de/</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="de" href="https://lml-med.de/"/>
+    </url>
+
+    <!-- Datenschutz -->
+    <url>
+        <loc>https://lml-med.de/datenschutz.html</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <!-- Impressum -->
+    <url>
+        <loc>https://lml-med.de/impressum.html</loc>
+        <lastmod>2026-02-27</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <!-- /docs/ ist NICHT enthalten – privater Bereich -->
+
+</urlset>
