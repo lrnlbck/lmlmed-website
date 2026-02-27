@@ -87,13 +87,12 @@ h6 {
     height: 60px;
     width: auto;
     filter: drop-shadow(0 4px 10px rgba(255, 255, 255, 0.2));
-    /* Smooth rendering – removes jagged edges on retina/HiDPI */
     image-rendering: -webkit-optimize-contrast;
     image-rendering: smooth;
-    -webkit-font-smoothing: antialiased;
-    border-radius: 4px;
-    /* subtle rounding so dark background blends */
+    /* Removes grey background box by blending dark pixels into the navbar */
+    mix-blend-mode: screen;
 }
+
 
 .nav-links {
     display: flex;
