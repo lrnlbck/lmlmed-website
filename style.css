@@ -85,9 +85,14 @@ h6 {
 
 .logo img {
     height: 60px;
-    /* Increased size to fit vertical aeskulap staff */
     width: auto;
     filter: drop-shadow(0 4px 10px rgba(255, 255, 255, 0.2));
+    /* Smooth rendering – removes jagged edges on retina/HiDPI */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: smooth;
+    -webkit-font-smoothing: antialiased;
+    border-radius: 4px;
+    /* subtle rounding so dark background blends */
 }
 
 .nav-links {
@@ -613,6 +618,22 @@ footer {
     pointer-events: none;
 }
 
+/* On mobile, footer must not float over split content */
+@media (max-width: 900px) {
+    footer {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        padding: 1rem;
+        padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+        z-index: 1;
+        pointer-events: auto;
+        background: rgba(10, 14, 23, 0.9);
+        border-top: 1px solid var(--glass-border);
+    }
+}
+
 .footer-content {
     display: flex;
     justify-content: space-between;
@@ -670,16 +691,19 @@ footer {
     }
 
     .nav-links a {
-        font-size: 0.7rem;
-        padding: 0.35rem 0.6rem;
-        letter-spacing: 0.5px;
+        font-size: 0.62rem;
+        padding: 0.3rem 0.45rem;
+        letter-spacing: 0.3px;
+        white-space: nowrap;
     }
 
     /* ── Split layout stacks vertically ── */
     .split-layout {
         flex-direction: column;
-        height: auto;          /* allow natural scroll */
-        min-height: 100dvh;    /* dynamic viewport height */
+        height: auto;
+        /* allow natural scroll */
+        min-height: 100dvh;
+        /* dynamic viewport height */
         /* Reserve space for fixed navbar (~80-100px) */
         padding-top: calc(70px + env(safe-area-inset-top));
     }
@@ -764,12 +788,7 @@ footer {
         padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
     }
 
-    /* Footer */
-    footer {
-        padding: 1rem;
-        padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-    }
-
+    /* Footer – handled in the dedicated block above; keep .footer-content only */
     .footer-content {
         flex-direction: column;
         gap: 0.4rem;
