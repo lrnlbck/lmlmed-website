@@ -131,5 +131,126 @@ document.addEventListener('DOMContentLoaded', () => {
             el.removeAttribute('data-d');
         }
     });
+
+    // Contact Modal Logic
+    const contactModalOverlay = document.getElementById('contact-modal-overlay');
+    const btnOpenContact = document.getElementById('open-contact-modal');
+    const btnCloseContact = document.getElementById('close-contact-modal');
+    const contactForm = document.getElementById('contact-form');
+    const captchaText = document.getElementById('captcha-text');
+    const captchaExpected = document.getElementById('captcha-expected');
+    const captchaInput = document.getElementById('contact-captcha');
+    const formFeedback = document.getElementById('form-feedback');
+
+    // Generate Math Captcha
+    function generateCaptcha() {
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        captchaText.textContent = `Was ist ${num1} + ${num2}?`;
+        captchaExpected.value = num1 + num2;
+        captchaInput.value = '';
+    }
+
+    if (btnOpenContact && contactModalOverlay) {
+        btnOpenContact.addEventListener('click', (e) => {
+            e.preventDefault();
+            generateCaptcha();
+            formFeedback.style.display = 'none';
+            contactModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+
+        // Close on X button
+        btnCloseContact.addEventListener('click', (e) => {
+            e.preventDefault();
+            contactModalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close on clicking outside the modal
+        contactModalOverlay.addEventListener('click', (e) => {
+            if (e.target === contactModalOverlay) {
+                contactModalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    // Form Submission
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Check captcha first
+            if (captchaInput.value !== captchaExpected.value) {
+                showFeedback('Captcha ist inkorrekt. Bitte versuche es erneut.', 'error');
+                generateCaptcha();
+                return;
+            }
+
+            const btnSubmit = document.getElementById('contact-submit-btn');
+            const originalBtnHtml = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Senden...';
+            btnSubmit.disabled = true;
+
+            const payload = {
+                name: document.getElementById('contact-name').value,
+                organization: document.getElementById('contact-org').value,
+                email: document.getElementById('contact-email').value,
+                phone: document.getElementById('contact-phone').value,
+                message: document.getElementById('contact-message').value,
+                captchaResult: captchaInput.value,
+                captchaExpected: captchaExpected.value
+            };
+
+            try {
+                // Determine if we're running locally with Node vs GitHub Pages
+                // In a production setup with GitHub pages, this API endpoint would need to be 
+                // hosted somewhere else (e.g. Vercel, Railway, Heroku) since GH Pages is static.
+                // Assuming the user runs the Node server we created next to the files for now or deploys it.
+                
+                // Use relative path so it defaults to same domain:port
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showFeedback('Deine Anfrage wurde erfolgreich versendet! Du erhältst in Kürze eine Bestätigung.', 'success');
+                    contactForm.reset();
+                    generateCaptcha();
+                    
+                    setTimeout(() => {
+                        contactModalOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }, 4000);
+                } else {
+                    throw new Error(data.message || 'Ein Fehler ist aufgetreten.');
+                }
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                // Also show success locally if API isn't running but we want to simulate for testing
+                // Remove this in production if the server is properly hosted
+                if(error.message.includes('Failed to fetch')) {
+                   showFeedback('Fehler: Der E-Mail-Server ist aktuell nicht erreichbar. Bitte versuche es später noch einmal oder schreibe direkt eine E-Mail.', 'error');   
+                } else {
+                   showFeedback(error.message, 'error');
+                }
+            } finally {
+                btnSubmit.innerHTML = originalBtnHtml;
+                btnSubmit.disabled = false;
+            }
+        });
+    }
+
+    function showFeedback(msg, type) {
+        formFeedback.textContent = msg;
+        formFeedback.className = 'form-status ' + type;
+    }
 });
 
