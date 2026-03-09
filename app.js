@@ -218,7 +218,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(payload)
                 });
 
-                const data = await response.json();
+                let data;
+                try {
+                    data = await response.json();
+                } catch (e) {
+                    throw new Error('Der Server für die E-Mail Verarbeitung wurde noch nicht eingerichtet oder ist offline.');
+                }
 
                 if (response.ok && data.success) {
                     showFeedback('Deine Anfrage wurde erfolgreich versendet! Du erhältst in Kürze eine Bestätigung.', 'success');
@@ -230,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.body.style.overflow = '';
                     }, 4000);
                 } else {
-                    throw new Error(data.message || 'Ein Fehler ist aufgetreten.');
+                    throw new Error(data?.message || 'Ein Fehler ist aufgetreten.');
                 }
             } catch (error) {
                 console.error("Error submitting form:", error);
@@ -249,6 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showFeedback(msg, type) {
+        formFeedback.style.display = ''; // Clear inline display:none
         formFeedback.textContent = msg;
         formFeedback.className = 'form-status ' + type;
     }
