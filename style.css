@@ -147,7 +147,7 @@ h1, h2, h3, h4 {
     width: auto;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: smooth;
-    mix-blend-mode: screen;
+    filter: drop-shadow(0 0 6px rgba(99, 179, 237, 0.25));
 }
 
 .logo-text {
@@ -1501,6 +1501,363 @@ h1, h2, h3, h4 {
     color: #f87171;
 }
 
+/* ═══ DEFI-GAME LAUNCH BUTTON & INLINE PANEL ═══ */
+.defi-launch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(245, 158, 11, 0.2));
+    border: 1px solid rgba(248, 113, 113, 0.45);
+    color: #fca5a5;
+    padding: 0.38rem 0.9rem;
+    border-radius: 999px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.defi-launch-btn:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.38), rgba(245, 158, 11, 0.32));
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.28);
+}
+
+.defi-game-section {
+    padding: 1rem 0 4rem;
+}
+
+.defi-card {
+    padding: 1.75rem;
+    border-color: rgba(34, 197, 94, 0.28);
+    background: rgba(6, 12, 22, 0.9);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.defi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.15rem;
+}
+
+.defi-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.defi-title-group h3 {
+    font-size: 1.25rem;
+    color: #fff;
+}
+
+.defi-title-group i {
+    color: #fbbf24;
+}
+
+.defi-live-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 10px #22c55e;
+}
+
+.defi-hud {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.defi-hud-pill {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--glass-border);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: var(--clr-text-muted);
+}
+
+.defi-hud-pill strong {
+    color: #fff;
+}
+
+.defi-close-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--glass-border);
+    color: var(--clr-text-muted);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.defi-close-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.defi-monitor-wrap {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    background: #040911;
+}
+
+.defi-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.defi-feedback {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    z-index: 5;
+    white-space: nowrap;
+    max-width: 94%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.defi-feedback.good {
+    background: rgba(22, 163, 74, 0.92);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(22, 163, 74, 0.4);
+}
+
+.defi-feedback.bad {
+    background: rgba(220, 38, 38, 0.94);
+    color: #fff;
+}
+
+.defi-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 9, 17, 0.92);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.25rem;
+    z-index: 6;
+    overflow-y: auto;
+}
+
+.defi-overlay h4 {
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+}
+
+.defi-overlay p {
+    color: var(--clr-text-muted);
+    font-size: 0.88rem;
+    max-width: 640px;
+    margin-bottom: 0.65rem;
+}
+
+.defi-controls-hint kbd {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 0.12rem 0.45rem;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.btn-shock-start {
+    background: linear-gradient(135deg, #ef4444, #f59e0b);
+    color: #fff;
+    margin-top: 0.4rem;
+    box-shadow: 0 10px 28px rgba(239, 68, 68, 0.35);
+}
+
+.defi-go-title {
+    color: #f87171;
+}
+
+.defi-go-note {
+    color: #e2e8f0 !important;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 0.55rem 0.9rem;
+    border-radius: 10px;
+}
+
+.defi-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.65rem;
+    width: min(620px, 100%);
+    margin: 0.65rem 0 0.9rem;
+}
+
+.defi-stat-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 0.55rem 0.4rem;
+}
+
+.defi-stat-box span {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--clr-text-muted);
+}
+
+.defi-stat-box strong {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    color: #fff;
+}
+
+/* Pulse Status & Timer Row */
+.defi-status-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.95rem;
+    flex-wrap: wrap;
+}
+
+.defi-pulse-badge {
+    background: rgba(220, 38, 38, 0.2);
+    border: 2px solid #ef4444;
+    color: #ef4444;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 1rem;
+    border-radius: 10px;
+    text-transform: uppercase;
+    box-shadow: 0 0 18px rgba(239, 68, 68, 0.25);
+}
+
+.defi-timer-wrap {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.defi-timer-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.defi-timer-bar {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #38bdf8, #22c55e);
+    transition: width 0.08s linear;
+}
+
+.defi-timer-bar.shockable-bar {
+    background: linear-gradient(90deg, #f59e0b, #ef4444);
+}
+
+.defi-timer-text {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.82rem;
+    color: var(--clr-text-muted);
+    min-width: 145px;
+    text-align: right;
+}
+
+/* Action Buttons */
+.defi-actions-row {
+    display: flex;
+    gap: 0.85rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-shock-trigger {
+    flex: 2 1 240px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-radius: 14px;
+    border: 2px solid #fca5a5;
+    background: linear-gradient(135deg, #dc2626, #ea580c);
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+    transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.btn-shock-trigger:active {
+    transform: scale(0.97);
+}
+
+.btn-shock-trigger kbd {
+    font-family: inherit;
+    font-size: 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.18rem 0.5rem;
+    border-radius: 6px;
+}
+
+.btn-noshock-trigger {
+    flex: 1 1 180px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 1rem 1.2rem;
+    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--clr-text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
+.btn-noshock-trigger:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 768px) {
+    .defi-monitor-wrap {
+        height: 290px;
+    }
+    .defi-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .btn-shock-trigger kbd {
+        display: none;
+    }
+}
+
 /* ═══ COMMAND PALETTE (⌘K) ═══ */
 .cmd-overlay {
     position: fixed;
@@ -1731,9 +2088,18 @@ h1, h2, h3, h4 {
     .quals-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-}
 
-@media (max-width: 768px) {
+    /* Dozent hero card on tablet/mobile: auto height, no forced stretching */
+    .hero-dozent {
+        min-height: auto;
+        max-height: none;
+        display: none; /* hide hero dozent teaser on mobile – full section is below */
+    }
+
+    .hero-dozent-content {
+        height: auto;
+    }
+}@media (max-width: 768px) {
     .nav-links,
     .cmd-trigger-label,
     .cmd-trigger kbd {

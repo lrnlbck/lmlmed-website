@@ -986,6 +986,103 @@
                 </div>
             </div>
         </section>
+        <!-- ═══ INLINE DEFI-GAME (OPENED FROM FOOTER BUTTON) ═══ -->
+        <section class="defi-game-section hidden" id="defi-game-section" aria-label="Defi-Game Reanimationstrainer">
+            <div class="container">
+                <div class="defi-card glass-panel">
+                    <div class="defi-header">
+                        <div class="defi-title-group">
+                            <span class="defi-live-dot"></span>
+                            <h3><i class="fa-solid fa-bolt"></i> Defi-Game – Schockbar oder nicht?</h3>
+                        </div>
+                        <div class="defi-hud">
+                            <span class="defi-hud-pill" id="defi-round-label">Runde 1</span>
+                            <span class="defi-hud-pill">Richtig: <strong id="defi-score">0</strong></span>
+                            <span class="defi-hud-pill">Schocks: <strong id="defi-shocks">0</strong></span>
+                            <button type="button" class="defi-close-btn" id="close-defi-game-btn"
+                                aria-label="Defi-Game schließen">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Monitor Screen -->
+                    <div class="defi-monitor-wrap">
+                        <canvas id="defi-canvas" class="defi-canvas"></canvas>
+
+                        <!-- Feedback Flash -->
+                        <div class="defi-feedback hidden" id="defi-feedback" role="status"></div>
+
+                        <!-- Start Overlay -->
+                        <div class="defi-overlay" id="defi-start-overlay">
+                            <h4>Bereit für den Schock-Check?</h4>
+                            <p>
+                                Erkenne in Sekundenbruchteilen, ob der Rhythmus <strong>schockbar</strong> ist
+                                (z.&nbsp;B. VF grob/ultrafein, pVT, pulslose Torsades) oder <strong>nicht schockbar</strong>
+                                (Asystolie, P-Wellen-Asystolie, PEA, Rhythmen mit Puls).
+                            </p>
+                            <p class="defi-controls-hint">
+                                <kbd>Leertaste</kbd> oder <strong>SCHOCK</strong>-Button = Defibrillieren • Bei nicht-schockbaren Rhythmen abwarten oder <kbd>→</kbd>
+                            </p>
+                            <button type="button" class="btn-modern btn-shock-start" id="defi-start-btn">
+                                <i class="fa-solid fa-bolt"></i> Spiel starten
+                            </button>
+                        </div>
+
+                        <!-- Game Over Overlay -->
+                        <div class="defi-overlay hidden" id="defi-gameover-overlay">
+                            <h4 class="defi-go-title" id="defi-go-title">Game Over</h4>
+                            <p class="defi-go-note" id="defi-go-note"></p>
+                            <div class="defi-stats-grid">
+                                <div class="defi-stat-box">
+                                    <span>Richtige Runden</span>
+                                    <strong id="defi-stat-rounds">0</strong>
+                                </div>
+                                <div class="defi-stat-box">
+                                    <span>Korrekte Schocks</span>
+                                    <strong id="defi-stat-shocks">0</strong>
+                                </div>
+                                <div class="defi-stat-box">
+                                    <span>Ø Schock-Zeit</span>
+                                    <strong id="defi-stat-avg">—</strong>
+                                </div>
+                                <div class="defi-stat-box">
+                                    <span>Schnellster Schock</span>
+                                    <strong id="defi-stat-best">—</strong>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-modern btn-shock-start" id="defi-retry-btn">
+                                <i class="fa-solid fa-rotate-right"></i> Nochmal spielen
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pulse Status & Timer Bar -->
+                    <div class="defi-status-row">
+                        <div class="defi-pulse-badge" id="defi-pulse-badge">PULSLOS</div>
+                        <div class="defi-timer-wrap">
+                            <div class="defi-timer-track">
+                                <div class="defi-timer-bar" id="defi-timer-bar"></div>
+                            </div>
+                            <span class="defi-timer-text" id="defi-timer-text">Bereit</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons (Desktop + Mobile) -->
+                    <div class="defi-actions-row">
+                        <button type="button" class="btn-shock-trigger" id="defi-shock-btn">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>SCHOCK AUSLÖSEN</span>
+                            <kbd>Leertaste</kbd>
+                        </button>
+                        <button type="button" class="btn-noshock-trigger" id="defi-noshock-btn">
+                            <i class="fa-solid fa-forward"></i>
+                            <span>Nicht schockbar / Weiter</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- ═══ FOOTER ═══ -->
@@ -1025,6 +1122,9 @@
                 <button type="button" class="rhythm-btn" data-rhythm="vt">VT</button>
                 <button type="button" class="rhythm-btn" data-rhythm="vf">Kammerflimmern</button>
             </div>
+            <button type="button" class="defi-launch-btn" id="open-defi-game-btn">
+                <i class="fa-solid fa-bolt"></i> Defi-Game starten
+            </button>
         </div>
     </footer>
 
@@ -1064,6 +1164,7 @@
     </div>
 
     <script src="app.js"></script>
+    <script src="defi-game.js"></script>
 </body>
 
 </html>
