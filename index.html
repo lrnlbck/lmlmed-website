@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- ═══ PRIMARY META ═══ -->
-    <title>LML-MED | NOTSAN-HELP Podcast &amp; Dozent für Notfallmedizin – Laurin Lobeck</title>
+    <title>LML-MED | NOTSAN-HELP Podcast &amp; Dozent für Notfallmedizin – Laurin Maxim Lobeck</title>
     <meta name="description"
-        content="Laurin Lobeck – Notfallsanitäter, Medizinstudent &amp; ERC ALS Instructor. Host des NOTSAN-HELP Podcasts für das Notfallsanitäter-Staatsexamen. Dozent für Notfallmedizin, Trauma-Management (ITLS) &amp; Feuerwehr-Fortbildungen.">
+        content="Laurin Maxim Lobeck – Notfallsanitäter, Medizinstudent &amp; ERC ALS Instructor. Host des NOTSAN-HELP Podcasts für das Notfallsanitäter-Staatsexamen. Dozent für Notfallmedizin, Trauma-Management (ITLS) &amp; Feuerwehr-Fortbildungen.">
     <meta name="keywords"
-        content="NOTSAN-HELP, Notfallsanitäter Staatsexamen, Podcast Notfallmedizin, ERC ALS, Rettungsdienst Fortbildung, Notfallsanitäter Prüfungsvorbereitung, Dozent Notfallmedizin, ITLS, Feuerwehr Fortbildung, Laurin Lobeck, LML-MED">
-    <meta name="author" content="Laurin Lobeck">
+        content="NOTSAN-HELP, Notfallsanitäter Staatsexamen, Podcast Notfallmedizin, ERC ALS, Rettungsdienst Fortbildung, Notfallsanitäter Prüfungsvorbereitung, Dozent Notfallmedizin, ITLS, Feuerwehr Fortbildung, Laurin Maxim Lobeck, Laurin Lobeck, LML-MED">
+    <meta name="author" content="Laurin Maxim Lobeck">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <meta name="language" content="de">
     <meta name="theme-color" content="#0a0e17">
@@ -28,7 +28,7 @@
     <meta property="og:locale" content="de_DE">
     <meta property="og:title" content="LML-MED – NOTSAN-HELP Podcast &amp; Dozent für Notfallmedizin">
     <meta property="og:description"
-        content="NOTSAN-HELP – der Podcast fürs Notfallsanitäter-Staatsexamen. Plus Laurin Lobeck als Dozent für ERC ALS, Trauma-Management &amp; Feuerwehr-Fortbildungen.">
+        content="NOTSAN-HELP – der Podcast fürs Notfallsanitäter-Staatsexamen. Plus Laurin Maxim Lobeck als Dozent für ERC ALS, Trauma-Management &amp; Feuerwehr-Fortbildungen.">
     <meta property="og:image" content="https://lml-med.de/assets/og-cover.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -74,8 +74,8 @@
         {
           "@type": "Person",
           "@id": "https://lml-med.de/#laurin-lobeck",
-          "name": "Laurin Lobeck",
-          "alternateName": "Laurin Maxim Lobeck",
+          "name": "Laurin Maxim Lobeck",
+          "alternateName": "Laurin Lobeck",
           "url": "https://lml-med.de",
           "image": "https://lml-med.de/portrait_transparent.png",
           "jobTitle": ["Notfallsanitäter", "Medizinstudent", "ERC ALS Instructor", "Dozent für Notfallmedizin"],
@@ -200,7 +200,7 @@
           "name": "LML-MED",
           "url": "https://lml-med.de",
           "inLanguage": "de",
-          "description": "Offizielle Website von Laurin Lobeck – Notfallmedizin-Podcast NOTSAN-HELP und Dozenten-Angebote.",
+          "description": "Offizielle Website von Laurin Maxim Lobeck – Notfallmedizin-Podcast NOTSAN-HELP und Dozenten-Angebote.",
           "publisher": { "@id": "https://lml-med.de/#laurin-lobeck" }
         }
       ]
@@ -212,9 +212,10 @@
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-    <!-- Ambient Mesh + Grid Background -->
+    <!-- Ambient Mesh + Grid Background + Subtle Live Telemetry Monitor -->
     <div class="mesh-background" aria-hidden="true"></div>
     <div class="grid-overlay" aria-hidden="true"></div>
+    <canvas id="telemetry-canvas" class="telemetry-canvas" aria-hidden="true"></canvas>
 
     <!-- ═══ TOP NAVIGATION ═══ -->
     <header class="navbar" id="navbar">
@@ -925,10 +926,10 @@
                         <div class="portrait-frame glass-panel">
                             <div class="portrait-glow" aria-hidden="true"></div>
                             <img src="portrait_transparent.png"
-                                alt="Laurin Lobeck – Notfallsanitäter, Medizinstudent und Dozent für Notfallmedizin"
+                                alt="Laurin Maxim Lobeck – Notfallsanitäter, Medizinstudent und Dozent für Notfallmedizin"
                                 class="portrait-img" loading="lazy">
                             <div class="portrait-caption">
-                                <strong>Laurin Lobeck</strong>
+                                <strong>Laurin Maxim Lobeck</strong>
                                 <span>Notfallsanitäter &amp; stud. med.</span>
                             </div>
                         </div>
@@ -992,7 +993,7 @@
         <div class="container footer-content">
             <div class="footer-brand">
                 <img src="assets/aeskulap_mic_.png" alt="LML-MED" class="footer-logo">
-                <span>&copy; 2026 LML-MED – Laurin Lobeck</span>
+                <span>&copy; 2026 LML-MED – Laurin Maxim Lobeck</span>
             </div>
             <div class="footer-links">
                 <a href="https://open.spotify.com/show/2a0V5gKPb2GrG680q5iMPc?si=JGwP67QeRe2yxfIv_GvzZQ"
@@ -1006,6 +1007,23 @@
                 <a href="datenschutz.html">Datenschutz</a>
                 <span class="footer-sep">&middot;</span>
                 <a href="impressum.html">Impressum</a>
+            </div>
+        </div>
+
+        <!-- Subtle Monitor Easter Egg -->
+        <div class="container monitor-easter-egg" id="monitor-easter-egg">
+            <div class="monitor-vitals" aria-live="polite">
+                <span class="vital-item vital-hr"><i class="fa-solid fa-heart-pulse"></i> <span id="vital-hr">HF 72</span></span>
+                <span class="vital-item vital-spo2"><span id="vital-spo2">SpO₂ 99%</span></span>
+                <span class="vital-item vital-art"><span id="vital-art">ART 122/78</span></span>
+                <span class="vital-item vital-etco2"><span id="vital-etco2">etCO₂ 36</span></span>
+            </div>
+            <div class="rhythm-switcher" role="group" aria-label="Hintergrund-EKG Rhythmus umschalten">
+                <button type="button" class="rhythm-btn active" data-rhythm="auto" title="Automatischer Wechsel alle 60 Sekunden">Auto</button>
+                <button type="button" class="rhythm-btn" data-rhythm="sinus">Sinusrhythmus</button>
+                <button type="button" class="rhythm-btn" data-rhythm="stemi">STEMI</button>
+                <button type="button" class="rhythm-btn" data-rhythm="vt">VT</button>
+                <button type="button" class="rhythm-btn" data-rhythm="vf">Kammerflimmern</button>
             </div>
         </div>
     </footer>

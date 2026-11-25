@@ -388,4 +388,216 @@ document.addEventListener('DOMContentLoaded', () => {
             cookieBanner.classList.add('hidden');
         });
     }
+
+    // ── 12. Subtle 4-Channel Medical Telemetry Monitor & Easter Egg ──
+    const canvas = document.getElementById('telemetry-canvas');
+    if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const ctx = canvas.getContext('2d');
+        const rhythmBtns = document.querySelectorAll('.rhythm-btn');
+        const vitalHr = document.getElementById('vital-hr');
+        const vitalSpo2 = document.getElementById('vital-spo2');
+        const vitalArt = document.getElementById('vital-art');
+        const vitalEtco2 = document.getElementById('vital-etco2');
+
+        const rhythmCycle = ['sinus', 'stemi', 'vt', 'vf'];
+        const rhythmMeta = {
+            sinus: { label: 'Sinusrhythmus', hr: 'HF 72', spo2: 'SpO₂ 99%', art: 'ART 122/78', etco2: 'etCO₂ 36' },
+            stemi: { label: 'STEMI', hr: 'HF 88', spo2: 'SpO₂ 95%', art: 'ART 104/66', etco2: 'etCO₂ 34' },
+            vt: { label: 'Ventrikuläre Tachykardie', hr: 'HF 175', spo2: 'SpO₂ 84%', art: 'ART 74/48', etco2: 'etCO₂ 24' },
+            vf: { label: 'Kammerflimmern', hr: 'HF ---', spo2: 'SpO₂ --%', art: 'ART 18/14', etco2: 'etCO₂ 11' }
+        };
+
+        let mode = 'auto';
+        let activeRhythm = 'sinus';
+        let cycleIdx = 0;
+
+        function updateVitalsUI(rhythm) {
+            const m = rhythmMeta[rhythm] || rhythmMeta.sinus;
+            if (vitalHr) vitalHr.textContent = m.hr;
+            if (vitalSpo2) vitalSpo2.textContent = m.spo2;
+            if (vitalArt) vitalArt.textContent = m.art;
+            if (vitalEtco2) vitalEtco2.textContent = m.etco2;
+        }
+
+        rhythmBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                rhythmBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const chosen = btn.dataset.rhythm;
+                mode = chosen;
+                if (chosen === 'auto') {
+                    activeRhythm = rhythmCycle[cycleIdx];
+                    showToast('Monitor: Auto-Wechsel (alle 60s) aktiv');
+                } else {
+                    activeRhythm = chosen;
+                    const msg = chosen === 'vf'
+                        ? 'Monitor: Kammerflimmern (Defibrillation empfohlen 😉)'
+                        : `Monitor: ${rhythmMeta[chosen].label}`;
+                    showToast(msg);
+                }
+                updateVitalsUI(activeRhythm);
+            });
+        });
+
+        // Automatic rhythm switch every 60 seconds in 'auto' mode
+        setInterval(() => {
+            if (mode !== 'auto') return;
+            cycleIdx = (cycleIdx + 1) % rhythmCycle.length;
+            activeRhythm = rhythmCycle[cycleIdx];
+            updateVitalsUI(activeRhythm);
+        }, 60000);
+
+        let w = 0, h = 0, dpr = 1;
+        function resizeCanvas() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.width = w * dpr;
+            canvas.height = h * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        function gauss(u, center, width) {
+            const z = (u - center) / width;
+            return Math.exp(-z * z);
+        }
+
+        function sampleEcg(t, rhythm) {
+            if (rhythm === 'vf') {
+                return (
+                    0.34 * Math.sin(t * 2 * Math.PI * 6.8) +
+                    0.26 * Math.sin(t * 2 * Math.PI * 10.3 + 1.1) +
+                    0.18 * Math.sin(t * 2 * Math.PI * 15.7 + 2.4) +
+                    0.14 * Math.cos(t * 2 * Math.PI * 4.5)
+                ) * (0.65 + 0.35 * Math.sin(t * 1.9));
+            }
+            if (rhythm === 'vt') {
+                const period = 60 / 175;
+                const u = (t % period) / period;
+                return 0.72 * Math.sin(u * 2 * Math.PI) + 0.22 * Math.sin(u * 4 * Math.PI - 0.6);
+            }
+            const bpm = rhythm === 'stemi' ? 88 : 72;
+            const period = 60 / bpm;
+            const u = (t % period) / period;
+
+            let v = 0;
+            v += 0.14 * gauss(u, 0.12, 0.025); // P wave
+            v -= 0.12 * gauss(u, 0.225, 0.008); // Q dip
+            v += 1.0 * gauss(u, 0.25, 0.011);   // R peak
+            if (rhythm === 'stemi') {
+                // Classic STEMI tombstone ST-elevation merging into T-wave
+                v += 0.56 * gauss(u, 0.34, 0.065) + 0.26 * gauss(u, 0.44, 0.05);
+            } else {
+                v -= 0.26 * gauss(u, 0.275, 0.01); // S dip
+                v += 0.28 * gauss(u, 0.44, 0.042); // T wave
+            }
+            return v;
+        }
+
+        function samplePleth(t, rhythm) {
+            if (rhythm === 'vf') return 0.02 * Math.sin(t * 19);
+            const bpm = rhythm === 'vt' ? 175 : (rhythm === 'stemi' ? 88 : 72);
+            const period = 60 / bpm;
+            const u = ((t - 0.14 + period) % period) / period;
+            const amp = rhythm === 'vt' ? 0.42 : 0.95;
+            // Systolic peak + dicrotic notch
+            const sys = gauss(u, 0.22, 0.09);
+            const dic = 0.48 * gauss(u, 0.46, 0.14);
+            return amp * (sys + dic) - 0.2;
+        }
+
+        function sampleArt(t, rhythm) {
+            if (rhythm === 'vf') return -0.35 + 0.02 * Math.sin(t * 13);
+            const bpm = rhythm === 'vt' ? 175 : (rhythm === 'stemi' ? 88 : 72);
+            const period = 60 / bpm;
+            const u = ((t - 0.09 + period) % period) / period;
+            const amp = rhythm === 'vt' ? 0.38 : (rhythm === 'stemi' ? 0.78 : 0.95);
+            let v = 0;
+            if (u < 0.16) {
+                v = u / 0.16;
+            } else if (u < 0.38) {
+                v = 1.0 - 0.48 * ((u - 0.16) / 0.22);
+            } else if (u < 0.44) {
+                v = 0.52 + 0.1 * Math.sin(((u - 0.38) / 0.06) * Math.PI); // dicrotic notch
+            } else {
+                v = 0.52 * Math.exp(-2.4 * (u - 0.44));
+            }
+            return amp * v - 0.35;
+        }
+
+        function sampleCapno(t, rhythm) {
+            const period = 4.2; // ~14/min respiratory rate
+            const u = (t % period) / period;
+            const amp = rhythm === 'vf' ? 0.38 : (rhythm === 'vt' ? 0.68 : 0.92);
+            let v = 0;
+            if (u < 0.42) {
+                v = 0; // Inspiratory baseline
+            } else if (u < 0.5) {
+                v = (u - 0.42) / 0.08; // Expiratory upstroke
+            } else if (u < 0.88) {
+                v = 0.92 + 0.08 * ((u - 0.5) / 0.38); // Alveolar plateau
+            } else {
+                v = Math.max(0, 1 - (u - 0.88) / 0.07); // Inspiratory downstroke
+            }
+            return amp * v - 0.35;
+        }
+
+        const channels = [
+            { yFrac: 0.22, amp: 34, color: 'rgba(34, 197, 94, 0.85)', fn: sampleEcg },
+            { yFrac: 0.44, amp: 24, color: 'rgba(56, 189, 248, 0.72)', fn: samplePleth },
+            { yFrac: 0.66, amp: 26, color: 'rgba(248, 113, 113, 0.72)', fn: sampleArt },
+            { yFrac: 0.86, amp: 22, color: 'rgba(251, 191, 36, 0.65)', fn: sampleCapno }
+        ];
+
+        let cursorX = 0;
+        let lastTime = performance.now();
+        let simTime = 0;
+        let prevY = channels.map(ch => ch.yFrac * h);
+
+        function drawFrame(now) {
+            const dt = Math.min(0.05, (now - lastTime) / 1000);
+            lastTime = now;
+
+            const speedPxPerSec = 105;
+            const dx = speedPxPerSec * dt;
+            const nextX = (cursorX + dx) % w;
+            const wrapped = nextX < cursorX;
+
+            // Erase ahead of sweep bar
+            ctx.clearRect(nextX, 0, 28, h);
+            if (wrapped) {
+                ctx.clearRect(0, 0, nextX + 28, h);
+            }
+
+            const steps = Math.max(1, Math.ceil(dx / 2));
+            for (let s = 1; s <= steps; s++) {
+                const frac = s / steps;
+                const x = (cursorX + dx * frac) % w;
+                const t = simTime + dt * frac;
+
+                channels.forEach((ch, idx) => {
+                    const y = ch.yFrac * h - ch.fn(t, activeRhythm) * ch.amp;
+                    if (!wrapped && Math.abs(x - cursorX) < 40) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = ch.color;
+                        ctx.lineWidth = 1.6;
+                        ctx.lineCap = 'round';
+                        ctx.moveTo(x - dx / steps, prevY[idx]);
+                        ctx.lineTo(x, y);
+                        ctx.stroke();
+                    }
+                    prevY[idx] = y;
+                });
+            }
+
+            cursorX = nextX;
+            simTime += dt;
+            requestAnimationFrame(drawFrame);
+        }
+
+        updateVitalsUI(activeRhythm);
+        requestAnimationFrame(drawFrame);
+    }
 });
