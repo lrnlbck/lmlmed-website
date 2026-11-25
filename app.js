@@ -264,6 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
         { icon: 'fa-solid fa-microphone-lines', title: 'NOTSAN-HELP Podcast', desc: 'Zur Podcast-Übersicht springen', action: () => location.hash = '#podcast' },
         { icon: 'fa-solid fa-list-ul', title: 'Alle 11 Episoden', desc: 'Episodenliste durchsuchen & filtern', action: () => location.hash = '#episoden' },
         { icon: 'fa-solid fa-chalkboard-user', title: 'Dozent & Qualifikationen', desc: 'Fortbildungen, ERC ALS, ITLS & Feuerwehr', action: () => location.hash = '#dozent' },
+        { icon: 'fa-solid fa-book-medical', title: 'Publikationen', desc: 'Wissenschaftliche Veröffentlichungen & ResearchGate', action: () => location.hash = '#publikationen' },
+        { icon: 'fa-brands fa-researchgate', title: 'ResearchGate-Profil öffnen', desc: 'Publikationen von Laurin Lobeck auf ResearchGate', action: () => window.open('https://www.researchgate.net/profile/Laurin-Lobeck', '_blank', 'noopener,noreferrer') },
+        { icon: 'fa-solid fa-share-nodes', title: 'Socials & Vernetzen', desc: 'LinkedIn & Instagram (@notsanhelp)', action: () => location.hash = '#socials' },
+        { icon: 'fa-brands fa-linkedin-in', title: 'LinkedIn öffnen', desc: 'linkedin.com/in/laurin-lobeck', action: () => window.open('https://www.linkedin.com/in/laurin-lobeck/', '_blank', 'noopener,noreferrer') },
+        { icon: 'fa-brands fa-instagram', title: 'Instagram (@notsanhelp) öffnen', desc: 'Podcast-Updates & Lernimpulse', action: () => window.open('https://www.instagram.com/notsanhelp/', '_blank', 'noopener,noreferrer') },
         { icon: 'fa-solid fa-folder-open', title: 'Kursunterlagen (/docs)', desc: 'Geschützter Downloadbereich für Kursteilnehmer', action: () => window.location.href = '/docs' },
         { icon: 'fa-brands fa-spotify', title: 'Spotify öffnen', desc: 'NOTSAN-HELP auf Spotify anhören', action: () => window.open('https://open.spotify.com/show/2a0V5gKPb2GrG680q5iMPc', '_blank', 'noopener,noreferrer') },
         { icon: 'fa-solid fa-podcast', title: 'Apple Podcasts öffnen', desc: 'NOTSAN-HELP auf Apple Podcasts anhören', action: () => window.open('https://podcasts.apple.com/de/podcast/notsan-help/id1830853129', '_blank', 'noopener,noreferrer') },
@@ -600,4 +605,76 @@ document.addEventListener('DOMContentLoaded', () => {
         updateVitalsUI(activeRhythm);
         requestAnimationFrame(drawFrame);
     }
+
+    // ── 13. Social Cards Mouse Glow ──
+    document.querySelectorAll('.social-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+            card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+        });
+    });
+
+    // ── 14. Dynamic Publications Loader (chronological, newest first) ──
+    const pubContainer = document.getElementById('publications-container');
+    async function loadPublications() {
+        if (!pubContainer) return;
+        try {
+            const res = await fetch('publications.json', { cache: 'no-store' });
+            if (!res.ok) return;
+            const items = await res.json();
+            if (!Array.isArray(items) || items.length === 0) {
+                // Keep default "Publikationen in Arbeit" card
+                return;
+            }
+
+            // Sort newest first by ISO date (or year fallback)
+            const sorted = [...items].sort((a, b) => {
+                const da = new Date(a.date || 0).getTime();
+                const db = new Date(b.date || 0).getTime();
+                return db - da;
+            });
+
+            const listEl = document.createElement('div');
+            listEl.className = 'pub-list';
+
+            sorted.forEach((pub, idx) => {
+                const card = document.createElement(pub.url ? 'a' : 'article');
+                card.className = 'pub-item glass-panel';
+                if (pub.url) {
+                    card.href = pub.url;
+                    card.target = '_blank';
+                    card.rel = 'noopener noreferrer';
+                    card.style.textDecoration = 'none';
+                }
+
+                const num = document.createElement('span');
+                num.className = 'pub-index';
+                num.textContent = String(sorted.length - idx).padStart(2, '0');
+
+                const meta = document.createElement('div');
+                meta.className = 'pub-meta';
+
+                const authors = document.createElement('p');
+                authors.className = 'pub-authors';
+                authors.textContent = pub.authors || 'Laurin Maxim Lobeck';
+
+                const title = document.createElement('h3');
+                title.className = 'pub-title';
+                title.textContent = pub.title || 'Unbenannte Publikation';
+
+                meta.appendChild(authors);
+                meta.appendChild(title);
+                card.appendChild(num);
+                card.appendChild(meta);
+                listEl.appendChild(card);
+            });
+
+            pubContainer.innerHTML = '';
+            pubContainer.appendChild(listEl);
+        } catch {
+            // Keep default "Publikationen in Arbeit" state on fetch/offline fallback
+        }
+    }
+    loadPublications();
 });

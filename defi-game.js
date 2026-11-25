@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreEl = document.getElementById('defi-score');
     const shocksEl = document.getElementById('defi-shocks');
     const roundLabelEl = document.getElementById('defi-round-label');
+    const rhythmNameEl = document.getElementById('defi-rhythm-name');
 
     if (!openBtn || !gameSection || !canvas) return;
     const ctx = canvas.getContext('2d');
@@ -411,6 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Red pulse status badge as requested
         pulseBadge.textContent = currentRhythm.pulseless ? 'PULSLOS' : 'MIT PULS';
         pulseBadge.className = 'defi-pulse-badge';
+        if (rhythmNameEl) rhythmNameEl.textContent = 'EKG-Analyse…';
 
         updateHud();
 
@@ -435,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleNonShockSurvived() {
         state = 'transition';
         roundCount += 1;
+        if (rhythmNameEl) rhythmNameEl.textContent = currentRhythm.name;
         showFeedback(`✅ Richtig nicht geschockt! (${currentRhythm.name})`, true);
         updateHud();
         transitionTimer = setTimeout(startNextRound, 950);
@@ -451,6 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
             roundCount += 1;
             shockCount += 1;
             shockTimes.push(reactionMs);
+            if (rhythmNameEl) rhythmNameEl.textContent = currentRhythm.name;
             updateHud();
             showFeedback(
                 `⚡ SCHOCK INDIZIERT! (${(reactionMs / 1000).toFixed(2)} s) – ${currentRhythm.name}`,
@@ -458,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
             );
             transitionTimer = setTimeout(startNextRound, 1100);
         } else {
+            if (rhythmNameEl) rhythmNameEl.textContent = currentRhythm.name;
             endGame(
                 `❌ UNNÖTIGER SCHOCK bei "${currentRhythm.name}"!`,
                 currentRhythm.note
@@ -471,6 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clearTimeout(nonShockTimer);
             handleNonShockSurvived();
         } else {
+            if (rhythmNameEl) rhythmNameEl.textContent = currentRhythm.name;
             endGame(
                 `❌ KEIN SCHOCK bei "${currentRhythm.name}" gedrückt!`,
                 currentRhythm.note

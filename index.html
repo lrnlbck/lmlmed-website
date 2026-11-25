@@ -97,7 +97,10 @@
           ],
           "sameAs": [
             "https://open.spotify.com/show/2a0V5gKPb2GrG680q5iMPc",
-            "https://podcasts.apple.com/de/podcast/notsan-help/id1830853129"
+            "https://podcasts.apple.com/de/podcast/notsan-help/id1830853129",
+            "https://www.researchgate.net/profile/Laurin-Lobeck",
+            "https://www.linkedin.com/in/laurin-lobeck/",
+            "https://www.instagram.com/notsanhelp/"
           ]
         },
         {
@@ -228,6 +231,8 @@
             <a href="#podcast" class="nav-item active">Podcast</a>
             <a href="#episoden" class="nav-item">Episoden</a>
             <a href="#dozent" class="nav-item">Dozent</a>
+            <a href="#publikationen" class="nav-item">Publikationen</a>
+            <a href="#socials" class="nav-item">Socials</a>
             <a href="/docs" class="nav-item nav-docs"><i class="fa-solid fa-folder-open"></i> Unterlagen</a>
         </nav>
 
@@ -249,6 +254,8 @@
         <a href="#podcast" class="drawer-link"><i class="fa-solid fa-microphone-lines"></i> NOTSAN-HELP Podcast</a>
         <a href="#episoden" class="drawer-link"><i class="fa-solid fa-list-ul"></i> Alle 11 Episoden</a>
         <a href="#dozent" class="drawer-link"><i class="fa-solid fa-chalkboard-user"></i> Dozent &amp; Qualifikationen</a>
+        <a href="#publikationen" class="drawer-link"><i class="fa-solid fa-book-medical"></i> Publikationen</a>
+        <a href="#socials" class="drawer-link"><i class="fa-solid fa-share-nodes"></i> Socials &amp; Vernetzen</a>
         <a href="/docs" class="drawer-link drawer-highlight"><i class="fa-solid fa-folder-open"></i> Kursunterlagen</a>
         <div class="drawer-footer-links">
             <a href="datenschutz.html">Datenschutz</a>
@@ -986,10 +993,115 @@
                 </div>
             </div>
         </section>
+
+        <!-- ═══ PUBLIKATIONEN SECTION ═══ -->
+        <section class="publications-section" id="publikationen">
+            <div class="container">
+                <div class="section-header reveal-up">
+                    <div>
+                        <span class="section-eyebrow">Forschung &amp; Wissenschaft</span>
+                        <h2>Publikationen</h2>
+                        <p>Veröffentlichungen mit meiner Autorenschaft – chronologisch sortiert (neueste zuerst).</p>
+                    </div>
+                    <a href="https://www.researchgate.net/profile/Laurin-Lobeck" target="_blank"
+                        rel="noopener noreferrer" class="btn-modern btn-researchgate">
+                        <i class="fa-brands fa-researchgate"></i>
+                        <span>ResearchGate-Profil</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <!-- Dynamically populated from publications.json via app.js -->
+                <div id="publications-container" class="publications-container reveal-up" style="--delay: 0.08s;"
+                    aria-live="polite">
+                    <div class="pub-empty-card glass-panel">
+                        <div class="pub-empty-icon" aria-hidden="true">
+                            <i class="fa-solid fa-microscope"></i>
+                        </div>
+                        <span class="pub-status-pill">
+                            <span class="pub-status-dot"></span> ResearchGate • Live-Status
+                        </span>
+                        <h3>Publikationen in Arbeit</h3>
+                        <p>
+                            Aktuell befinden sich die ersten wissenschaftlichen Arbeiten in Vorbereitung. Sobald neue
+                            Veröffentlichungen mit meiner Autorenschaft erscheinen, werden sie hier chronologisch mit
+                            Autoren und Titel gelistet.
+                        </p>
+                        <a href="https://www.researchgate.net/profile/Laurin-Lobeck" target="_blank"
+                            rel="noopener noreferrer" class="btn-modern btn-glass">
+                            <i class="fa-brands fa-researchgate"></i> Auf ResearchGate ansehen
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ SOCIALS SECTION ═══ -->
+        <section class="socials-section" id="socials">
+            <div class="container">
+                <div class="section-header reveal-up">
+                    <div>
+                        <span class="section-eyebrow">Community &amp; Netzwerk</span>
+                        <h2>Socials</h2>
+                        <p>Einblicke hinter die Kulissen, Lernimpulse &amp; direkter fachlicher Austausch.</p>
+                    </div>
+                </div>
+
+                <div class="socials-bento">
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/in/laurin-lobeck/" target="_blank" rel="noopener noreferrer"
+                        class="social-card social-linkedin glass-panel reveal-up" style="--delay: 0.05s;">
+                        <div class="social-card-glow"></div>
+                        <div class="social-card-top">
+                            <div class="social-icon-box">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </div>
+                            <span class="social-tag">Berufliches Netzwerk</span>
+                        </div>
+                        <div class="social-card-body">
+                            <h3>LinkedIn</h3>
+                            <span class="social-handle">linkedin.com/in/laurin-lobeck</span>
+                            <p>
+                                Medizin, Notfallmedizin, Lehre &amp; wissenschaftliche Projekte – vernetze Dich direkt
+                                für Fortbildungsanfragen und fachlichen Austausch.
+                            </p>
+                        </div>
+                        <div class="social-card-footer">
+                            <span class="social-cta">Profil aufrufen <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/notsanhelp/" target="_blank" rel="noopener noreferrer"
+                        class="social-card social-instagram glass-panel reveal-up" style="--delay: 0.12s;">
+                        <div class="social-card-glow"></div>
+                        <div class="social-card-top">
+                            <div class="social-icon-box">
+                                <i class="fa-brands fa-instagram"></i>
+                            </div>
+                            <span class="social-tag">Podcast &amp; Community</span>
+                        </div>
+                        <div class="social-card-body">
+                            <h3>Instagram</h3>
+                            <span class="social-handle">@notsanhelp</span>
+                            <p>
+                                Kompakte Lernimpulse für das Notfallsanitäter-Staatsexamen, Episoden-Updates, Quizze
+                                und Einblicke in den Rettungsdienst-Alltag.
+                            </p>
+                        </div>
+                        <div class="social-card-footer">
+                            <span class="social-cta">@notsanhelp folgen <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- ═══ INLINE DEFI-GAME (OPENED FROM FOOTER BUTTON) ═══ -->
         <section class="defi-game-section hidden" id="defi-game-section" aria-label="Defi-Game Reanimationstrainer">
             <div class="container">
                 <div class="defi-card glass-panel">
+                    <!-- TOP BAR -->
                     <div class="defi-header">
                         <div class="defi-title-group">
                             <span class="defi-live-dot"></span>
@@ -1006,80 +1118,98 @@
                         </div>
                     </div>
 
-                    <!-- Monitor Screen -->
-                    <div class="defi-monitor-wrap">
-                        <canvas id="defi-canvas" class="defi-canvas"></canvas>
+                    <!-- 2-COLUMN BODY (Desktop) / stacked (Mobile) -->
+                    <div class="defi-body">
 
-                        <!-- Feedback Flash -->
-                        <div class="defi-feedback hidden" id="defi-feedback" role="status"></div>
+                        <!-- LEFT: Monitor Screen -->
+                        <div class="defi-monitor-wrap">
+                            <canvas id="defi-canvas" class="defi-canvas"></canvas>
 
-                        <!-- Start Overlay -->
-                        <div class="defi-overlay" id="defi-start-overlay">
-                            <h4>Bereit für den Schock-Check?</h4>
-                            <p>
-                                Erkenne in Sekundenbruchteilen, ob der Rhythmus <strong>schockbar</strong> ist
-                                (z.&nbsp;B. VF grob/ultrafein, pVT, pulslose Torsades) oder <strong>nicht schockbar</strong>
-                                (Asystolie, P-Wellen-Asystolie, PEA, Rhythmen mit Puls).
-                            </p>
-                            <p class="defi-controls-hint">
-                                <kbd>Leertaste</kbd> oder <strong>SCHOCK</strong>-Button = Defibrillieren • Bei nicht-schockbaren Rhythmen abwarten oder <kbd>→</kbd>
-                            </p>
-                            <button type="button" class="btn-modern btn-shock-start" id="defi-start-btn">
-                                <i class="fa-solid fa-bolt"></i> Spiel starten
-                            </button>
+                            <!-- Feedback Flash -->
+                            <div class="defi-feedback hidden" id="defi-feedback" role="status"></div>
+
+                            <!-- Start Overlay -->
+                            <div class="defi-overlay" id="defi-start-overlay">
+                                <h4>Bereit für den Schock-Check?</h4>
+                                <p>
+                                    Erkenne in Sekundenbruchteilen, ob der Rhythmus <strong>schockbar</strong> ist
+                                    (z.&nbsp;B. VF grob/ultrafein, pVT, pulslose Torsades) oder <strong>nicht schockbar</strong>
+                                    (Asystolie, P-Wellen-Asystolie, PEA, Rhythmen mit Puls).
+                                </p>
+                                <p class="defi-controls-hint">
+                                    <kbd>Leertaste</kbd> = Defibrillieren &nbsp;·&nbsp; <kbd>→</kbd> = Nicht schockbar / Weiter
+                                </p>
+                                <button type="button" class="btn-modern btn-shock-start" id="defi-start-btn">
+                                    <i class="fa-solid fa-bolt"></i> Spiel starten
+                                </button>
+                            </div>
+
+                            <!-- Game Over Overlay -->
+                            <div class="defi-overlay hidden" id="defi-gameover-overlay">
+                                <h4 class="defi-go-title" id="defi-go-title">Game Over</h4>
+                                <p class="defi-go-note" id="defi-go-note"></p>
+                                <div class="defi-stats-grid">
+                                    <div class="defi-stat-box">
+                                        <span>Richtige Runden</span>
+                                        <strong id="defi-stat-rounds">0</strong>
+                                    </div>
+                                    <div class="defi-stat-box">
+                                        <span>Korrekte Schocks</span>
+                                        <strong id="defi-stat-shocks">0</strong>
+                                    </div>
+                                    <div class="defi-stat-box">
+                                        <span>Ø Schock-Zeit</span>
+                                        <strong id="defi-stat-avg">—</strong>
+                                    </div>
+                                    <div class="defi-stat-box">
+                                        <span>Schnellster Schock</span>
+                                        <strong id="defi-stat-best">—</strong>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-modern btn-shock-start" id="defi-retry-btn">
+                                    <i class="fa-solid fa-rotate-right"></i> Nochmal spielen
+                                </button>
+                            </div>
                         </div>
 
-                        <!-- Game Over Overlay -->
-                        <div class="defi-overlay hidden" id="defi-gameover-overlay">
-                            <h4 class="defi-go-title" id="defi-go-title">Game Over</h4>
-                            <p class="defi-go-note" id="defi-go-note"></p>
-                            <div class="defi-stats-grid">
-                                <div class="defi-stat-box">
-                                    <span>Richtige Runden</span>
-                                    <strong id="defi-stat-rounds">0</strong>
-                                </div>
-                                <div class="defi-stat-box">
-                                    <span>Korrekte Schocks</span>
-                                    <strong id="defi-stat-shocks">0</strong>
-                                </div>
-                                <div class="defi-stat-box">
-                                    <span>Ø Schock-Zeit</span>
-                                    <strong id="defi-stat-avg">—</strong>
-                                </div>
-                                <div class="defi-stat-box">
-                                    <span>Schnellster Schock</span>
-                                    <strong id="defi-stat-best">—</strong>
+                        <!-- RIGHT: Controls Panel -->
+                        <div class="defi-controls-panel">
+
+                            <!-- Rhythm name label (desktop only) -->
+                            <div class="defi-rhythm-label">
+                                <span class="defi-rhythm-sub">Aktueller Rhythmus</span>
+                                <div class="defi-rhythm-name" id="defi-rhythm-name">—</div>
+                            </div>
+
+                            <!-- Pulse Status & Timer -->
+                            <div class="defi-status-row">
+                                <div class="defi-pulse-badge" id="defi-pulse-badge">PULSLOS</div>
+                                <div class="defi-timer-wrap">
+                                    <div class="defi-timer-top">
+                                        <span class="defi-timer-label">Zeit</span>
+                                        <span class="defi-timer-text" id="defi-timer-text">Bereit</span>
+                                    </div>
+                                    <div class="defi-timer-track">
+                                        <div class="defi-timer-bar" id="defi-timer-bar"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <button type="button" class="btn-modern btn-shock-start" id="defi-retry-btn">
-                                <i class="fa-solid fa-rotate-right"></i> Nochmal spielen
-                            </button>
-                        </div>
-                    </div>
 
-                    <!-- Pulse Status & Timer Bar -->
-                    <div class="defi-status-row">
-                        <div class="defi-pulse-badge" id="defi-pulse-badge">PULSLOS</div>
-                        <div class="defi-timer-wrap">
-                            <div class="defi-timer-track">
-                                <div class="defi-timer-bar" id="defi-timer-bar"></div>
+                            <!-- Action Buttons -->
+                            <div class="defi-actions-row">
+                                <button type="button" class="btn-shock-trigger" id="defi-shock-btn">
+                                    <i class="fa-solid fa-bolt shock-icon"></i>
+                                    <span>SCHOCK AUSLÖSEN</span>
+                                    <kbd>Leertaste</kbd>
+                                </button>
+                                <button type="button" class="btn-noshock-trigger" id="defi-noshock-btn">
+                                    <i class="fa-solid fa-forward"></i>
+                                    <span>Nicht schockbar / Weiter</span>
+                                </button>
                             </div>
-                            <span class="defi-timer-text" id="defi-timer-text">Bereit</span>
-                        </div>
-                    </div>
 
-                    <!-- Action Buttons (Desktop + Mobile) -->
-                    <div class="defi-actions-row">
-                        <button type="button" class="btn-shock-trigger" id="defi-shock-btn">
-                            <i class="fa-solid fa-bolt"></i>
-                            <span>SCHOCK AUSLÖSEN</span>
-                            <kbd>Leertaste</kbd>
-                        </button>
-                        <button type="button" class="btn-noshock-trigger" id="defi-noshock-btn">
-                            <i class="fa-solid fa-forward"></i>
-                            <span>Nicht schockbar / Weiter</span>
-                        </button>
-                    </div>
+                        </div><!-- /defi-controls-panel -->
+                    </div><!-- /defi-body -->
                 </div>
             </div>
         </section>
@@ -1098,6 +1228,12 @@
                         class="fa-brands fa-spotify"></i></a>
                 <a href="https://podcasts.apple.com/de/podcast/notsan-help/id1830853129" target="_blank"
                     rel="noopener noreferrer" aria-label="Apple Podcasts"><i class="fa-solid fa-podcast"></i></a>
+                <a href="https://www.linkedin.com/in/laurin-lobeck/" target="_blank"
+                    rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/notsanhelp/" target="_blank"
+                    rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.researchgate.net/profile/Laurin-Lobeck" target="_blank"
+                    rel="noopener noreferrer" aria-label="ResearchGate"><i class="fa-brands fa-researchgate"></i></a>
                 <span class="footer-sep">&middot;</span>
                 <a href="/docs">Unterlagen</a>
                 <span class="footer-sep">&middot;</span>
