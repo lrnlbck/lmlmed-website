@@ -8,133 +8,123 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Security helpers
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
 
-// Serve static files (your website)
-app.use(express.static(path.join(__dirname)));
+const rateLimitMap = new Map();
+function contactRateLimit(req, res, next) {
+    const ip = req.ip || 'unknown';
+    const now = Date.now();
+    const windowMs = 15 * 60 * 1000;
+    const entry = rateLimitMap.get(ip) || { count: 0, start: now };
+    if (now - entry.start > windowMs) {
+        entry.count = 0;
+        entry.start = now;
+    }
+    entry.count += 1;
+    rateLimitMap.set(ip, entry);
+    if (entry.count > 10) {
+        return res.status(429).json({ success: false, message: 'Zu viele Anfragen. Bitte später erneut versuchen.' });
+    }
+    next();
+}
+
+// Restrict CORS to production domain & local dev
+app.use(cors({
+    origin: ['https://lml-med.de', 'http://localhost:3000']
+}));
+app.use(bodyParser.json({ limit: '32kb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '32kb' }));
+
+// Block access to sensitive/server files before static middleware
+app.use((req, res, next) => {
+    const blocked = /^\/(\.|server\.js|package(-lock)?\.json|node_modules)/i;
+    if (blocked.test(req.path)) {
+        return res.status(403).send('Forbidden');
+    }
+    next();
+});
+
+// Serve static website files
+app.use(express.static(path.join(__dirname), { dotfiles: 'deny' }));
 
 // Configure Nodemailer transporter
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT, // Usually 465 for SSL or 587 for TLS
-    secure: true, // true for 465, false for other ports
+    port: process.env.EMAIL_PORT,
+    secure: true,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
     }
 });
 
-// Verify email connection
-transporter.verify(function(error, success) {
+transporter.verify((error) => {
     if (error) {
-        console.error("Email configuration error:", error);
+        console.error('Email configuration error:', error.message);
     } else {
-        console.log("Server is ready to send messages");
+        console.log('Server is ready to send messages');
     }
 });
 
 // Contact Route API
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contact', contactRateLimit, async (req, res) => {
     try {
         const { name, organization, email, phone, message, captchaResult, captchaExpected } = req.body;
 
-        // Basic server-side validation
         if (!name || !email || !message) {
             return res.status(400).json({ success: false, message: 'Bitte füllen Sie alle Pflichtfelder aus.' });
         }
 
-        // Validate Captcha
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(String(email)) || String(name).length > 120 || String(message).length > 4000) {
+            return res.status(400).json({ success: false, message: 'Ungültige Eingabedaten.' });
+        }
+
         if (String(captchaResult) !== String(captchaExpected)) {
             return res.status(400).json({ success: false, message: 'Captcha war leider inkorrekt. Bitte erneut versuchen.' });
         }
 
-        // Email to Info (lml-med)
+        const safeName = escapeHtml(name);
+        const safeOrg = escapeHtml(organization || '-');
+        const safeEmail = escapeHtml(email);
+        const safePhone = escapeHtml(phone || '-');
+        const safeMessageHtml = escapeHtml(message).replace(/\n/g, '<br>');
+
         const mailToAdmin = {
             from: `"LML-MED Website" <${process.env.EMAIL_USER}>`,
             to: process.env.RECIPIENT_EMAIL || 'info@lml-med.de',
-            replyTo: email,
-            subject: `Neue Kontaktanfrage von ${name}`,
-            text: `
-Neue Kontaktanfrage über lml-med.de:
-
-Name: ${name}
-Organisation: ${organization || '-'}
-E-Mail: ${email}
-Telefon: ${phone || '-'}
-
-Nachricht:
-${message}
-            `,
-            html: `
-<h3>Neue Kontaktanfrage über lml-med.de</h3>
-<p><strong>Name:</strong> ${name}</p>
-<p><strong>Organisation:</strong> ${organization || '-'}</p>
-<p><strong>E-Mail:</strong> ${email}</p>
-<p><strong>Telefon:</strong> ${phone || '-'}</p>
-<br>
-<p><strong>Nachricht:</strong></p>
-<p>${message.replace(/\n/g, '<br>')}</p>
-            `
+            replyTo: String(email).replace(/[\r\n]/g, ''),
+            subject: `Neue Kontaktanfrage von ${String(name).replace(/[\r\n]/g, '')}`,
+            text: `Neue Kontaktanfrage über lml-med.de:\n\nName: ${name}\nOrganisation: ${organization || '-'}\nE-Mail: ${email}\nTelefon: ${phone || '-'}\n\nNachricht:\n${message}`,
+            html: `<h3>Neue Kontaktanfrage über lml-med.de</h3><p><strong>Name:</strong> ${safeName}</p><p><strong>Organisation:</strong> ${safeOrg}</p><p><strong>E-Mail:</strong> ${safeEmail}</p><p><strong>Telefon:</strong> ${safePhone}</p><br><p><strong>Nachricht:</strong></p><p>${safeMessageHtml}</p>`
         };
 
-        // Confirmation Email to the user
         const mailToUser = {
             from: `"Laurin Lobeck | LML-MED" <${process.env.EMAIL_USER}>`,
-            to: email,
-            subject: `Vielen Dank für Ihre Anfrage`,
-            text: `
-Guten Tag ${name},
-
-vielen Dank für Ihre Nachricht! Ich habe Ihre Kontaktaufnahme erhalten und werde mich schnellstmöglich bei Ihnen melden. 
-
-Zur Kontrolle hier noch einmal Ihre Angaben:
-
-Name: ${name}
-Organisation: ${organization || '-'}
-E-Mail: ${email}
-Telefon: ${phone || '-'}
-
-Ihre Nachricht:
-${message}
-
-Beste Grüße
-Laurin Lobeck
-LML-MED
-            `,
-            html: `
-<p>Guten Tag ${name},</p>
-<p>vielen Dank für Ihre Nachricht! Ich habe Ihre Kontaktaufnahme erhalten und werde mich schnellstmöglich bei Ihnen melden.</p>
-<br>
-<p>Zur Kontrolle hier noch einmal Ihre Angaben:</p>
-<p><strong>Name:</strong> ${name}</p>
-<p><strong>Organisation:</strong> ${organization || '-'}</p>
-<p><strong>E-Mail:</strong> ${email}</p>
-<p><strong>Telefon:</strong> ${phone || '-'}</p>
-<br>
-<p><strong>Ihre Nachricht:</strong></p>
-<p>${message.replace(/\n/g, '<br>')}</p>
-<br>
-<br>
-<p>Beste Grüße</p>
-<p>Laurin Lobeck<br>LML-MED</p>
-            `
+            to: String(email).replace(/[\r\n]/g, ''),
+            subject: 'Vielen Dank für Ihre Anfrage',
+            text: `Guten Tag ${name},\n\nvielen Dank für Ihre Nachricht! Ich habe Ihre Kontaktaufnahme erhalten und werde mich schnellstmöglich bei Ihnen melden.\n\nBeste Grüße\nLaurin Lobeck\nLML-MED`,
+            html: `<p>Guten Tag ${safeName},</p><p>vielen Dank für Ihre Nachricht! Ich habe Ihre Kontaktaufnahme erhalten und werde mich schnellstmöglich bei Ihnen melden.</p><br><p><strong>Ihre Nachricht:</strong></p><p>${safeMessageHtml}</p><br><p>Beste Grüße<br>Laurin Lobeck<br>LML-MED</p>`
         };
 
-        // Send both emails
         await transporter.sendMail(mailToAdmin);
         await transporter.sendMail(mailToUser);
 
         res.status(200).json({ success: true, message: 'Nachricht erfolgreich gesendet!' });
     } catch (error) {
-        console.error("Error sending email:", error);
+        console.error('Error sending email:', error.message);
         res.status(500).json({ success: false, message: 'Es gab ein Problem beim Senden der E-Mail. Bitte versuchen Sie es später noch einmal.' });
     }
 });
 
-// Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

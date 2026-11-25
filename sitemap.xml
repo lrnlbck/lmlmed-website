@@ -5,7 +5,7 @@
     <!-- Hauptseite -->
     <url>
         <loc>https://lml-med.de/</loc>
-        <lastmod>2026-02-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <xhtml:link rel="alternate" hreflang="de" href="https://lml-med.de/"/>
@@ -14,7 +14,7 @@
     <!-- Datenschutz -->
     <url>
         <loc>https://lml-med.de/datenschutz.html</loc>
-        <lastmod>2026-02-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
@@ -22,7 +22,7 @@
     <!-- Impressum -->
     <url>
         <loc>https://lml-med.de/impressum.html</loc>
-        <lastmod>2026-02-27</lastmod>
+        <lastmod>2026-11-25</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
